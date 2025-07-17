@@ -1,0 +1,256 @@
+/* Modern, responsive styling with mobile-first approach */
+:root {
+    --primary-color: #4900be;
+    --secondary-color: #f3bd27;
+    --accent-color: #ffe75f;
+    --light-bg: #f8f9fa;
+    --dark-text: #2d3748;
+    --dark-light: #bacada;
+    --light-text: #f8f9fa;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: var(--light-bg);
+  }
+  
+  .home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--light-text);
+    border-radius: 16px;
+    margin: 1rem 0 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(30deg);
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    background: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .cta-button:active {
+    transform: translateY(1px);
+  }
+  
+  /* Features Section */
+  .features-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .feature-card {
+    background: white;
+    padding: 1.8rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .feature-card p {
+    color: var(--dark-text);
+    opacity: 0.9;
+  }
+  
+  /* About GMAT Section */
+  .about-gmat {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  
+  .about-gmat h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+  }
+  
+  .gmat-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .stat-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    min-width: 120px;
+    box-shadow: var(--card-shadow);
+  }
+  
+  .stat-item span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-item p {
+    color: var(--dark-text);
+    opacity: 0.8;
+    font-size: 0.9rem;
+  }
+  
+  .gmat-desc {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    line-height: 1.7;
+    color: #8177a7;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: auto;
+    padding: 2rem 0;
+    color: var(--dark-light);
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2rem 1rem;
+      border-radius: 12px;
+    }
+    
+    .hero-section h1 {
+      font-size: 2rem;
+    }
+    
+    .features-section {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .gmat-stats {
+      gap: 1rem;
+    }
+    
+    .stat-item {
+      padding: 1rem;
+      min-width: 100px;
+    }
+    
+    .stat-item span {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-section h1 {
+      font-size: 1.8rem;
+    }
+    
+    .hero-section p {
+      font-size: 1rem;
+    }
+    
+    .cta-button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .feature-card {
+      padding: 1.2rem;
+    }
+    
+    .about-gmat h2 {
+      font-size: 1.5rem;
+    }
+    
+    .gmat-stats {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stat-item {
+      width: 100%;
+      max-width: 200px;
+    }
+  }

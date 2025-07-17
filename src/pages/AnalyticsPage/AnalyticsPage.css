@@ -1,0 +1,269 @@
+/* Updated AnalyticsPage.css */
+ .performance-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+.analytics-page {
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.analytics-page h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.summary-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  margin-bottom: 1rem;
+}
+
+.overall-score-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 550px;
+}
+
+.overall-score-chart h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+  text-align: center;
+}
+
+.overall-summary {
+  background: #f5f7fa;
+  padding: 2rem;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.feedback-message h4 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.feedback-message p {
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.contact-us a {
+  color: #0088FE;
+  text-decoration: underline;
+}
+
+.contact-prompt {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.chart-container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+  /* max-height: fit-content; */
+}
+
+.chart-container:hover {
+  transform: translateY(-5px);
+}
+
+.chart-container h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #111;
+  /* align-items: center;not woking */
+  margin-left: 28%;
+}
+
+.analytics-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 30px; /* move it down */
+  margin-bottom: 20px; /* spacing below heading */
+  color: #333;
+}
+
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.button-group button {
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  min-width: 200px;
+}
+
+.back-button {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.back-button:hover {
+  background: #ccc;
+}
+
+.download-button {
+  background: #0088FE;
+  color: #fff;
+}
+
+.download-button:hover {
+  background: #0070d1;
+}
+
+.analytics-footer {
+  text-align: center;
+  margin-top: 10px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  color: #333;
+  border-top: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* This ensures the row items are horizontally aligned and centered */
+.footer-contact-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  flex-wrap: wrap; /* makes it responsive */
+}
+
+/* Remove extra margin for these to keep them aligned */
+.footer-phone,
+.footer-link {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer-link a:hover {
+  text-decoration: underline;
+}
+
+.footer-separator {
+  color: #aaa;
+}
+
+.footer-copy {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+
+
+
+@media (max-width: 992px) {
+  .summary-comparison {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .overall-score-chart {
+    order: -1;
+  }
+  
+  .analytics-title {
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-page {
+    padding: 1rem;
+  }
+  
+  .summary-comparison {
+    padding: 1rem;
+  }
+  
+  .overall-summary {
+    padding: 1rem;
+  }
+  
+  .performance-title {
+    font-size: 1.1rem;
+  }
+  
+  .chart-container h3 {
+    font-size: 1.1rem;
+    align-items: center;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button-group button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-title {
+    font-size: 1.3rem;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .feedback-text {
+    margin-left: 0;
+  }
+}
+
+
+@media (min-width: 1140px) {
+  .overall-score-chart {
+    height: 400px;
+  }
+}

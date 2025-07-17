@@ -1,0 +1,205 @@
+/* Add this at the top of your existing CSS */
+@media (min-width: 1140px) {
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chart-stats-wrapper {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 20px; */
+  }
+  
+  .chart-wrapper {
+    flex: 0 0 220px; /* Fixed width for chart */
+    height: 220px;
+    margin-right: 20px;
+  }
+  
+.stats-details {
+  flex: 1;
+  padding-right: 0px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -65px; /* 👈 pushes it upward */
+}
+
+  
+  .breakdown-table {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+/* Keep all your existing CSS below this point */
+.chart-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ... rest of your existing CSS ... */
+
+.chart-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.chart-wrapper {
+  flex: 1;
+  min-width: 150px;
+  height: 220px; /* reduced height */
+}
+
+.stats-details {
+  flex: 1;
+  /* padding-left: 20px; */
+}
+
+.chart-container > div:nth-child(2) {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+/* Optional: Styling the breakdown table */
+.breakdown-table {
+  margin-top: 0rem;
+  width: 100%;
+  /* overflow-x: auto; */
+}
+
+.breakdown-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  min-width: 250px;
+}
+
+.breakdown-table th {
+  background-color: #f7fafc;
+  font-weight: 600;
+  color: #2d3748;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border: 1px solid #e2e8f0;
+}
+
+.breakdown-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+}
+
+.breakdown-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.recharts-default-legend {
+  margin-top: 10px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .chart-container {
+    padding: 1.25rem;
+  }
+  
+  .chart-wrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chart-container h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .chart-wrapper {
+    height: 200px;
+    margin-bottom: 1.25rem;
+  }
+  
+  .stats-details {
+    margin: 1.25rem 0;
+    padding: 0.85rem;
+  }
+  
+  .stats-details p {
+    font-size: 0.9rem;
+  }
+  
+  .breakdown-table th,
+  .breakdown-table td {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    padding: 0.85rem;
+    border-radius: 6px;
+  }
+  
+  .chart-container h3 {
+    font-size: 1.15rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .chart-wrapper {
+    height: 200px;
+  }
+  
+  .stats-details p {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .breakdown-table {
+    margin-top: 1.25rem;
+  }
+  
+  .breakdown-table th,
+  .breakdown-table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Special handling for very small screens */
+@media (max-width: 360px) {
+  .chart-wrapper {
+    height: 200px;
+  }
+  
+  .stats-details {
+    padding: 0.75rem;
+  }
+  
+  .breakdown-table {
+    font-size: 0.8rem;
+  }
+}

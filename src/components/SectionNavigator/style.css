@@ -1,0 +1,117 @@
+/* Base styles */
+.test-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f8fafc;
+    padding: 0rem;
+  }
+  
+  .section-progress {
+    background-color: #1e40af;
+    color: white;
+    padding: 0.75rem 0.75rem;
+    border-radius: 0px;
+    margin-bottom: 0rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .test-container {
+      padding: 0.5rem;
+    }
+  
+    .section-progress {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.50rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .section-progress {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      border-radius: 4px;
+    }
+  }
+  
+  /* Animation for section transitions */
+  .section-transition-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .section-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .section-transition-exit {
+    opacity: 1;
+  }
+  
+  .section-transition-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  
+  /* Loading state */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1e40af;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Error state */
+  .error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    text-align: center;
+    border-left: 4px solid #b91c1c;
+  }
+  
+  /* Section specific overrides */
+  .quant-container,
+  .verbal-container,
+  .data-insights-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure child components take full width */
+  .quant-container > *,
+  .verbal-container > *,
+  .data-insights-page > * {
+    width: 100%;
+  }

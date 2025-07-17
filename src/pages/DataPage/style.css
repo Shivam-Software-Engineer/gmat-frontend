@@ -1,0 +1,155 @@
+.data-insights-page{
+  align-items: center;
+}
+
+/* Navigation Footer Styles */
+.navigation-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; 
+  background: white;
+  padding: 0.25rem 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}
+
+.next-button, .submit-button {
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.next-button {
+  background-color: #4a6bff;
+  color: white;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.next-button:hover {
+  background-color: #3a5bef;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
+}
+
+.submit-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.next-button:active, .submit-button:active {
+  transform: translateY(0);
+}
+
+/* Add padding to the bottom of your container to prevent content from being hidden */
+.data-insights-container {
+  padding-bottom: 70px; /* Adjust this value based on your footer height */
+}
+
+/* For the timer container */
+.timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* change this from right to center */
+  padding: 2px 10px;
+  background: #f8f9fa00;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.calculator-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #eff6ff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #1e40af;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.calculator-btn {
+ display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #eff6ff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #1e40af;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.calculator-btn:hover {
+  background: #95e48e;
+}
+
+.timer-bar {
+  display: flex;
+  justify-content: space-between;  /* spread elements left and right */
+  align-items: center;
+  width: 100%;                      /* 👈 take full width */
+  padding: 0.5rem 1rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  margin-bottom: 0rem;
+}
+.timer-bar h3 {
+  color: #1e3a8a;
+  font-weight: 600;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.timer-bar .timer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.timer-bar .time-left {
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.timer-bar .calculator-btn {
+  padding: 0.4rem 0.9rem;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.timer-bar .calculator-btn:hover {
+  background-color: #1d4ed8;
+}
