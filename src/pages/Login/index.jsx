@@ -186,7 +186,7 @@ const LoginPage = () => {
     setEmailData(obj);
 
     // ✅ Send OTP request to backend
-    await axios.post('http://localhost:8000/website/authentication/create', obj);
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/website/authentication/create`, obj);
 
     setShowOtp(true);
 
@@ -261,7 +261,7 @@ const handleSubmit = async () => {
   });
 
   try {
-    const response = await axios.post("http://localhost:8000/website/authentication/verify", {
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/website/authentication/verify`, {
       email: email,
       otp: joinedOtp
     });
