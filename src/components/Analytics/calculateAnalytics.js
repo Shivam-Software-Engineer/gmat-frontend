@@ -52,25 +52,26 @@ const calculateAnalytics = (verbalResponses, quantResponses, dataResponses) => {
   });
 
   // breakdown for Data Insights
-  const dataBreakdown = [];
-  const dataTypes = [...new Set(dataInsightsQuestions.map(q => q.type))];
-  dataTypes.forEach(type => {
-    const typeQuestions = dataInsightsQuestions.filter(q => q.type === type);
-    const total = typeQuestions.length;
-    let correct = 0;
+const dataBreakdown = [];
+const dataTypes = [...new Set(dataInsightsQuestions.map(q => q.type))];
 
-    typeQuestions.forEach(q => {
-      const id = q.id;
-      if (dataResponses[id]?.isCorrect) {
-        correct += 1;
-      }
-    });
+dataTypes.forEach(type => {
+  const typeQuestions = dataInsightsQuestions.filter(q => q.type === type);
+  const total = typeQuestions.length;
+  let correct = 0;
 
-    dataBreakdown.push({
-      type,
-      score: `${correct}/${total}`
-    });
+  typeQuestions.forEach(q => {
+    // const id = String(q.id);
+    if (dataResponses[q.id]?.isCorrect) {
+      correct += 1;
+    }
   });
+
+  dataBreakdown.push({
+    type,
+    score: `${correct}/${total}`
+  });
+});
 
   return [
     {

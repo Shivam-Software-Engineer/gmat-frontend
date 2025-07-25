@@ -123,6 +123,7 @@ const renderPieChart = (data, index) => {
             </thead>
             <tbody>
               {data.breakdown.map((item, idx) => (
+                console.log(data),
                 <tr key={idx}>
                   <td>{item.type}</td>
                   <td>{item.score}</td>

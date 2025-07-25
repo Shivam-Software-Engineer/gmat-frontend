@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./instructions.css";
 import Header from "../../components/header";
+import { useSelector } from "react-redux";
 
 const Instructions = () => {
+  
   const navigate = useNavigate();
+
+  
+const user = useSelector((state) => {
+  return state.Login.userDetail
+});  // Redux se user data
+
+
+useEffect(() => {
+  if (user==null) {
+    navigate('/login'); // redirect to login if not logged in
+  }
+}, [user]);
 
   return (
     <>

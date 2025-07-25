@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
+import { Result } from '../../../Context/context';
 
-const QuantResults = ({ quantQuestions, quantResponses, getQuestionStatus, setSelectedQuestion }) => {
+const QuantResults = ({ setSelectedQuestion }) => {
+  const { quantResult } = useContext(Result); // ✅ Pull from context
+
   return (
     <MathJaxContext
       config={{
@@ -23,25 +26,41 @@ const QuantResults = ({ quantQuestions, quantResponses, getQuestionStatus, setSe
           </tr>
         </thead>
         <tbody>
-          {quantQuestions.map((question, index) => {
-            const userAnswerIndex = quantResponses[index];
-            const status = getQuestionStatus(userAnswerIndex, question.correct);
-            const answerText = userAnswerIndex !== null ? question.options[userAnswerIndex] : 'Not attempted';
+          {quantResult.map((question, index) => {
+            const userAnswerIndex = question.selected;
+            const correctAnswerIndex = question.correct;
+            const status =
+              question.status === null
+                ? 'notAttempted'
+                : question.status
+                ? 'correct'
+                : 'incorrect';
+            const answerText =
+              userAnswerIndex !== null
+                ? question.options[userAnswerIndex]
+                : 'Not attempted';
 
             return (
               <tr key={index} className={`table-row ${status}`}>
-                <td className="table-cell clickable" onClick={() => setSelectedQuestion(index)}>
+                <td
+                  className="table-cell clickable"
+                  onClick={() => setSelectedQuestion(index)}
+                >
                   Q{index + 1}
                 </td>
                 <td className="table-cell">
                   <MathJax dynamic>{answerText}</MathJax>
                 </td>
                 <td className="table-cell">
-                  <MathJax dynamic>{question.options[question.correct]}</MathJax>
+                  <MathJax dynamic>{question.options[correctAnswerIndex]}</MathJax>
                 </td>
                 <td className="table-cell">
                   <span className="status-indicator">
-                    {status === 'correct' ? '✓' : status === 'incorrect' ? '✗' : '-'}
+                    {status === 'correct'
+                      ? '✓'
+                      : status === 'incorrect'
+                      ? '✗'
+                      : '-'}
                   </span>
                 </td>
               </tr>

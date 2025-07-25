@@ -13,21 +13,30 @@ body {
 }
 
 /* Layout */
-.instructions-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+/* .instructions-wrapper {
+ max-width: 1200px;
+  margin: 2rem auto;
   padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   
-}
+} */
 
 .instructions-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #ffffff; /* Pure white container */
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 2.5rem;
-  max-width: 900px;
+  /* max-width: 900px; */
   width: 100%;
   border: 1px solid #e0e6ed; /* Light border */
 }
@@ -177,8 +186,11 @@ body {
 
 /* Buttons */
 .action-buttons {
-  display: flex;
-  justify-content: space-between;
+  /* align-items: right !important; */
+  /* display: flex;
+  justify-content: space-between; */
+   display: flex;
+  justify-content: flex-end;
   margin-top: 2rem;
 }
 
@@ -195,6 +207,7 @@ body {
 .primary-button {
   background: #1a4b8c; /* Deep blue */
   color: white;
+  /* align-items: center !important; */
 }
 
 .primary-button:hover {

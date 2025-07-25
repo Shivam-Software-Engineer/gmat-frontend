@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/graphics.css';
+import './graphics.css';
 
 const GraphicsInterpretation = ({ question, onAnswer }) => {
   const [selectedOptions, setSelectedOptions] = useState(

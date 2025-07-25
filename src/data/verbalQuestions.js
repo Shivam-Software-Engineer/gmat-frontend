@@ -50,7 +50,7 @@ const questions = [
     },
     {
       id: 4,
-      type: 'RC',
+      type: 'CR',
       passage: ` The first and most important subject lying at the very threshold of the investigation, is the freedom of the human will. On the establishing of this doctrine depends the whole question of human responsibility, and yet it is a doctrine which Aristotle could not assume at once, because views had been held respecting it which required refutation. Socrates had held that all the virtues were sciences; therefore, that vice was the result of ignorance; that no one sins contrary to knowledge; and therefore, that vice is involuntary. Plato held that virtue was voluntary, because the natural bias of the will was towards good, but that a vicious state was an unnatural one—a morbid action, as it were, and therefore involuntary. Aristotle agreed with Plato so far as to maintain that a bias towards virtue is the normal condition of the will.`,
       text: " In the given passage, the two sections in boldface play which of the following roles?",
       options: [
@@ -65,7 +65,7 @@ const questions = [
     },
     {
       id: 5,
-      type: 'RC',
+      type: 'CR',
       passage: `As layers of material build up and the pressure from upper levels turns the lower layers harder and harder, sedimentary rock begins to form inside the earth's crust.  A specific sedimentary rock stratum that has an unusually high concentration of the metal iridium supports the idea that a meteorite struck the earth approximately 60 million years ago. Geologists hypothesize that the meteorite's impact with the earth created a massive cloud of dust containing iridium since meteorites are richer in iridium than the earth's crust. They claim that the dust finally dropped on Earth, where it mixed with other materials to produce a layer of iridium-rich rock as other layers accumulated on top of it.`,
       text: "Which one of the following, if true, most seriously weakens the argument that the iridium-rich layer described in the passage is evidence of a meteorite collision?",
       options: [
@@ -80,7 +80,7 @@ const questions = [
     },
     {
       id: 6,
-      type: 'RC',
+      type: 'CR',
       passage: `A certain king of Wales who lived in the tenth century, named Hoel the Good, fixed the price of a blind that is, of a new-born, kitten at one penny. A penny was a good deal in those days, remember: but the kitten’s price soon rose, for as soon as it could see and had killed one mouse, it was to fetch twopence; and as soon as it was known to be a good mouser, then the price was fourpence: a sum which many young folks of those times must have thought a small fortune. To compare, full-grown sheep or untrained house-dogs were also valued at fourpence. So it was quite realistic for a miller in a popular fairy tale to leave his three sons his mill, his donkey and his cat as their inheritance. If the youngest son who felt he was stuck with the future Puss in Boots had sold his cat instead of giving it a pair of boots as suggested, he could have been left with a profit of three pence to build a business of his own, rather than married to a princess because of the clever cat’s machinations.`,
       text: "Which of the following is an assumption that the passage depends upon?",
       options: [

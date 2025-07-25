@@ -7,6 +7,51 @@
   background-color: #f8fafc;
 }
 
+
+
+.toast-message {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  min-width: 220px;
+  max-width: 300px;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideInFadeOut 2.5s ease forwards;
+}
+
+
+/* Slide-in from left + fade-in/out */
+@keyframes slideInFadeOut {
+  0% {
+    transform: translateX(100%);
+  }
+  10%,
+  85% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .toast-message {
+    right: 10px;
+    bottom: 60px;
+    min-width: 140px;
+    max-width: 220px;
+    padding: 4px 10px;
+    font-size: 12px;
+    opacity: 0.8; /* 👈 You can adjust this (0.5 is very faint) */
+  }
+}
 /* ===== Header Styles ===== */
 /* .verbal-header {
   background-color: #1e40af;
@@ -390,9 +435,14 @@
   transition: all 0.2s ease;
   border: none;
 }
+.nav-btn.disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed;
+  color: #666;
+}
 
 .next-btn {
-  background-color: #4a6bff;
+background-color: green;
   color: white;
 }
 

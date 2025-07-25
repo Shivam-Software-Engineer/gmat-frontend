@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './combination.css';
 import Header from '../header';
+import { useSelector } from 'react-redux';
 
 const sectionOrders = [
   { 
@@ -31,9 +32,24 @@ const sectionOrders = [
 ];
 
 const Combination = () => {
+
   const [selectedOrder, setSelectedOrder] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const navigate = useNavigate();
+
+
+
+  
+const user = useSelector((state) => {
+  return state.Login.userDetail
+});  // Redux se user data
+
+
+useEffect(() => {
+  if (user==null) {
+    navigate('/login'); // redirect to login if not logged in
+  }
+}, [user]);
 
   useEffect(() => {
     const timer = timeLeft > 0 && setInterval(() => {

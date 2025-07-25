@@ -1,82 +1,92 @@
+/* Base Styling */
 .graphics-container {
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
-.question-heading {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: left;
-  font-weight: 500;
-}
-.chart-description{
- font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: left;
-  font-weight: 500;  
-}
-
 .chart-container {
   display: flex;
+  flex-direction: row !important;
   width: 100%;
-  min-height: 80vh;
   background: white;
 }
-.chart-container img{
-  max-width: 100%;
-  height: auto;
-  /* border-radius: 6px; */
-  margin: 0;
-  padding: 0;
+
+/* Desktop Layout: Side-by-side */
+@media (min-width: 1120px) {
+  .chart-container {
+    flex-direction: row;
+    min-height: 80vh;
+  }
+
+  .left-container,
+  .right-container {
+    flex: 1;
+    height: auto;
+  }
+
+  .left-container {
+    border-right: 1px solid #ddd;
+  }
+
+  .chart-images {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+  }
 }
 
+/* Left Container */
 .left-container {
-  flex: 2;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Changed from flex-start to center */
+  align-items: center;
   justify-content: flex-start;
-  border-right: 1px solid #ddd;
+  padding: 20px;
   background-color: #ffffff;
-  padding: 10px;
 }
 
+/* Right Container */
 .right-container {
-  flex: 2;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  overflow-y: auto; /* Add scroll if content is too tall */
+  overflow-y: auto;
 }
 
-.chart-images {
-  width: 105vh;
-  display: flex;
-  flex-direction: row;
-  gap: 50px;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Image Styling */
 .chart-image {
   max-width: 100%;
-  max-height: 100vh; /* Limits height to 70% of viewport */
-  width: auto;
-  height: auto;
+  max-height: 60vh;
   object-fit: contain;
 }
 
-.fill-in-prompt {
-  background: white;
-  border-radius: 8px;
-  padding: 0px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/* Image Container */
+.chart-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+/* Prompt Styling */
+.prompts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.prompt-statement {
   font-size: 1.1rem;
-  line-height: 1.6;
+  font-weight: 500;
   color: #2c3e50;
+  text-align: left;
+  margin-bottom: 10px;
 }
 
 .dropdown-select {
@@ -86,14 +96,13 @@
   border: 1px solid #d1d5db;
   background-color: white;
   font-size: 1rem;
-  color: #2c3e50;
-  min-width: 80px;
+  min-width: 100px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .dropdown-select:focus {
   outline: none;
-  /* border-color: #4a6bff; */
   box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
 }
 
@@ -106,82 +115,62 @@
   color: #999;
 }
 
-.prompt-statement {
+/* Text Headings */
+.question-heading,
+.chart-description {
   font-size: 1.1rem;
-  margin-bottom: 20px;
+  font-weight: 500;
   color: #2c3e50;
   text-align: left;
-  font-weight: 500; 
+  margin-bottom: 15px;
 }
 
-.prompts-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Responsive adjustments */
-/* Update your existing mobile media queries */
+/* Tablet (≤768px) */
 @media (max-width: 768px) {
   .chart-container {
     flex-direction: column;
-    min-height: 100%; /* Remove fixed height */
   }
-  
-  .left-container, 
+
+  .left-container,
   .right-container {
-    flex: none;
     width: 100%;
-    /* Consistent padding */
+    padding: 15px;
   }
-  .chart-container img {
-    max-width: 100%;
-  }
+
   .left-container {
     border-right: none;
-    border-bottom: 1px solid #ddd; /* Visual separation */
+    border-bottom: 1px solid #ddd;
   }
-  
+
   .chart-images {
-    width: 100%; /* Full width on mobile */
-    flex-direction: column; /* Stack vertically */
-    gap: 20px; /* Reduced gap */
-    padding: 10px 0; /* Add some vertical spacing */
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
   }
-  
+
   .chart-image {
-    max-width: 100%;
-    max-height: 1000vh; /* Reasonable max height */
-    width: auto;
-    height: auto;
-  }
-  
-  .question-heading,
-  .chart-description {
-    margin-bottom: 15px; /* Slightly reduced spacing */
+    max-height: 300px;
   }
 }
 
+/* Mobile (≤480px) */
 @media (max-width: 480px) {
   .graphics-container {
-    padding: 0; /* Remove container padding */
+    padding: 0;
   }
-  
-  .chart-images {
-    gap: 15px; /* Even smaller gap on very small screens */
-    
-  }
-  
+
   .chart-image {
-    max-height: 100vh; /* Smaller max height on phones */
+    max-height: 250px;
   }
-  
+
   .dropdown-select {
-    width: 50%; /* Full width dropdowns */
-    margin: 5px 0;
+    width: 100%;
+    margin: 8px 0;
   }
-  
+
   .prompt-statement {
-    margin-bottom: 15px;
+    font-size: 1rem;
+    margin-bottom: 12px;
   }
 }

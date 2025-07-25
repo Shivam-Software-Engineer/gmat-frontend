@@ -71,6 +71,9 @@
   .ti-close:active {
     transform: scale(0.95);
   }
+  .itqal{
+    background-color: rgba(59, 62, 59, 0.384) !important;
+  }
   
   .ti-display {
     width: 100%;

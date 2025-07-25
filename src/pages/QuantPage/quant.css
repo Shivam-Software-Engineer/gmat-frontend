@@ -21,6 +21,57 @@
   font-size: 1rem;
   margin-bottom: 3rem;
 }
+.disabled-btn {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.toast-message {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  min-width: 220px;
+  max-width: 300px;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideInFadeOut 2.5s ease forwards;
+}
+
+
+/* Slide-in from left + fade-in/out */
+@keyframes slideInFadeOut {
+  0% {
+    transform: translateX(100%);
+  }
+  10%,
+  85% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .toast-message {
+    right: 10px;
+    bottom: 60px;
+    min-width: 140px;
+    max-width: 220px;
+    padding: 4px 10px;
+    font-size: 12px;
+    opacity: 0.8; /* 👈 You can adjust this (0.5 is very faint) */
+  }
+}
+
 
 .question-image {
   max-width: 100%;

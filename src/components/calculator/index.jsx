@@ -48,13 +48,47 @@ const Calculator = ({ onClose }) => {
   }, [isDragging]);
 
   // Calculator functions
-  const handleButtonClick = (value) => {
-    if (input === 'Error') {
+const handleButtonClick = (value) => {
+  const operators = ['+', '-', '*', '/'];
+  const lastChar = input.slice(-1);
+
+  if (input === 'Error') {
+    setInput('');
+    return;
+  }
+
+  // 1. If input is empty, allow +, -, . or numbers
+  if (input === '') {
+    if (!isNaN(value) || value === '.' || value === '+' || value === '-') {
       setInput(value);
-      return;
     }
-    setInput(prev => prev + value);
-  };
+    return;
+  }
+
+  // 2. At the very beginning, if input is + or -, allow overwrite only with + or -
+  if ((input === '+' || input === '-') && (value === '+' || value === '-')) {
+    setInput(value); // Replace + with - or vice versa
+    return;
+  }
+
+  // ❌ Prevent overwrite with * or / at beginning like: + → *
+  if ((input === '+' || input === '-') && (value === '*' || value === '/')) {
+    return;
+  }
+
+  // 3. After number, if last is operator and new value is operator → overwrite
+  if (operators.includes(lastChar) && operators.includes(value)) {
+    setInput(prev => prev.slice(0, -1) + value);
+    return;
+  }
+
+  // 4. Append normally
+  setInput(prev => prev + value);
+};
+
+
+
+
 
   const calculateResult = () => {
     try {
@@ -187,7 +221,7 @@ const Calculator = ({ onClose }) => {
         <button onClick={clearInput} className="ti-on">ON/C</button>
         <button onClick={() => handleButtonClick('0')}>0</button>
         <button onClick={() => handleButtonClick('.')}>.</button>
-        <button className="ti-equals" onClick={calculateResult}>=</button>
+        <button className="itqal" onClick={calculateResult}>=</button>
       </div>
     </div>
   );

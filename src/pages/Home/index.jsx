@@ -50,6 +50,10 @@ export default function Home() {
             <p>Sections</p>
           </div>
           <div className="stat-item">
+            <span>21</span>
+            <p>Questions</p>
+          </div>
+          <div className="stat-item">
             <span>45m</span>
             <p>Duration</p>
           </div>

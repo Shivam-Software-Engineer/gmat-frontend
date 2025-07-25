@@ -7,6 +7,13 @@ const calculateDataInsightsStats = (dataResponses) => {
 
   dataInsightsQuestions.forEach((question, index) => {
     const status = getQuestionStatus(question, index, dataResponses);
+
+    // Set isCorrect status for later breakdown
+    const id = String(question.id);
+    if (!dataResponses[id]) dataResponses[id] = {};  // Ensure it exists
+
+    dataResponses[id].isCorrect = status === 'correct';
+
     if (status === 'correct') correct += 1;
   });
 

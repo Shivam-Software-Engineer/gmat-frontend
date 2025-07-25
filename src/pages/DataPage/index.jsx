@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import dataInsightsQuestions from '../../data/dataInsightsQuestions';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import TableAnalysis from '../../components/Datainsights/TableAnalysis';
 import GraphicsInterpretation from '../../components/Datainsights/GraphicsInterpretation';
 import MultiSourceReasoning from '../../components/Datainsights/MultiSourceReasoning';
@@ -7,9 +6,10 @@ import TwoPartAnalysis from '../../components/Datainsights/TwoPartAnalysis';
 import DataSufficiency from '../../components/Datainsights/DataSufficiency';
 import Calculator from '../../components/calculator';
 import StartTimer from '../../components/StartTimer';
-import "./style.css";
+import axios from 'axios';
+import './style.css';
+import { Result } from '../../Context/context';
 
-// Timer Component
 const Timer = ({ timeLeft, onCalculatorClick }) => {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -27,7 +27,8 @@ const Timer = ({ timeLeft, onCalculatorClick }) => {
 };
 
 const DataPage = ({ onComplete }) => {
-  const totalQuestions = dataInsightsQuestions.length;
+  const { setDataresult } = useContext(Result);
+  const [datainsighttques, setDatainsighttques] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showExplanation, setShowExplanation] = useState(false);
@@ -36,16 +37,30 @@ const DataPage = ({ onComplete }) => {
   const [testStarted, setTestStarted] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const currentQuestion = dataInsightsQuestions[currentQuestionIndex];
+  const [showToast, setShowToast] = useState(false);
 
-  // Save responses to localStorage whenever they change (only after test starts)
+  const Myapi = import.meta.env.VITE_BASE_API;
+  const currentQuestion = datainsighttques[currentQuestionIndex];
+  const totalQuestions = datainsighttques.length;
+
+  const getDatainsightquestions = () => {
+    axios.get(Myapi + '/website/questions/datainsight')
+      .then((res) => res.data)
+      .then((finalres) => {
+        setDatainsighttques(finalres.data);
+      });
+  };
+
+  useEffect(() => {
+    getDatainsightquestions();
+  }, []);
+
   useEffect(() => {
     if (testStarted && typeof window !== 'undefined') {
       localStorage.setItem('dataAnswers', JSON.stringify(answers));
     }
   }, [answers, testStarted]);
 
-  // Timer effect - only runs when test has started
   useEffect(() => {
     let timer;
     if (testStarted) {
@@ -63,10 +78,83 @@ const DataPage = ({ onComplete }) => {
     return () => clearInterval(timer);
   }, [testStarted]);
 
-  const handleSectionComplete = useCallback(() => {
+  const handleSectionComplete = async () => {
     setIsSubmitting(true);
-    if (onComplete) onComplete(); // only if onComplete passed as prop
-  }, [onComplete]);
+
+    const gUser = JSON.parse(localStorage.getItem("gUser"));
+    const email = gUser?.email;
+
+    if (!email) {
+      console.error("Email not found.");
+      return;
+    }
+
+    const storedAnswers = JSON.parse(localStorage.getItem("dataAnswers")) || {};
+
+    const formattedResponses = datainsighttques.map((question, index) => {
+      const userAnswers = storedAnswers[index] || {};
+
+      if (question.prompts && Array.isArray(question.prompts)) {
+        const updatedPrompts = question.prompts.map((prompt, promptIndex) => {
+          const selected = userAnswers[promptIndex] ?? null;
+          const correct = prompt.correct ?? null;
+
+          const status = selected === null ? null : Number(selected) === Number(correct) ? true : false;
+
+          return {
+            ...prompt,
+            selected,
+            status,
+          };
+        });
+
+        return {
+          ...question,
+          prompts: updatedPrompts,
+        };
+      }
+
+      // For TwoPartAnalysis style questions
+      const selected = userAnswers;
+      const correct = question.correct || {};
+      const updatedStatus = {};
+
+      for (const key in correct) {
+        const selectedValue = selected?.[key] ?? null;
+        updatedStatus[key] =
+          selectedValue === null
+            ? null
+            : Number(selectedValue) === Number(correct[key])
+            ? true
+            : false;
+      }
+
+      return {
+        ...question,
+        selected,
+        status: updatedStatus,
+      };
+    });
+
+    try {
+      const res = await axios.post(
+        `${Myapi}/website/answers/datainsight`,
+        {
+          email,
+          responses: formattedResponses,
+        }
+      );
+
+      setDataresult(res.data.data);
+
+      if (onComplete) onComplete();
+    } catch (err) {
+      console.error("Submission Error:", err.message);
+      alert("You already attempted this exam.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleCalculatorClick = useCallback(() => {
     setShowCalculator(prev => !prev);
@@ -83,38 +171,34 @@ const DataPage = ({ onComplete }) => {
     setTestStarted(true);
   };
 
-  // const handleAnswer = (promptIndex, answerIndex) => {
-  //   console.log(promptIndex,answerIndex);
-  //   setAnswers(prev => ({
-  //     ...prev,
-  //     [currentQuestionIndex]: {
-  //       ...prev[currentQuestionIndex],
-  //       [promptIndex]: answerIndex
-  //     }
-  //   }));
-  // };
+  const isCurrentAnswered = answers[currentQuestionIndex] && Object.keys(answers[currentQuestionIndex]).length > 0;
 
-  const handleAnswer = (rowIndex ,answerIndex) => {
+  const handleAnswer = (rowIndex, answerIndex) => {
     setAnswers((prev) => ({
       ...prev,
       [currentQuestionIndex]: {
-        ...(prev[currentQuestionIndex] || {}), // handle first-time initialization
+        ...(prev[currentQuestionIndex] || {}),
         [rowIndex]: Number(answerIndex),
       },
     }));
   };
-  
 
   const handleNext = () => {
+    const currentAnswer = answers[currentQuestionIndex];
+    if (!currentAnswer || Object.keys(currentAnswer).length === 0) {
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+      return;
+    }
     setShowExplanation(false);
     setCurrentQuestionIndex(prev => (prev + 1) % totalQuestions);
   };
 
   const renderQuestionComponent = () => {
+    if (!currentQuestion) return null;
     switch (currentQuestion.type) {
       case 'TableAnalysis':
-        return <TableAnalysis question={currentQuestion} onAnswer={handleAnswer} text={currentQuestion.text}
-    text1={currentQuestion.text1} />;
+        return <TableAnalysis question={currentQuestion} onAnswer={handleAnswer} text={currentQuestion.text} text1={currentQuestion.text1} />;
       case 'GraphicsInterpretation':
         return <GraphicsInterpretation question={currentQuestion} onAnswer={handleAnswer} />;
       case 'MultiSourceReasoning':
@@ -128,7 +212,6 @@ const DataPage = ({ onComplete }) => {
     }
   };
 
-  // Instruction screen
   if (showInstructions) {
     return (
       <div className="data-insights-page">
@@ -139,7 +222,6 @@ const DataPage = ({ onComplete }) => {
           <div className="instructions-content">
             <h3>Section Overview</h3>
             <p>This section contains {totalQuestions} questions to be completed in 16 minutes.</p>
-
             <h3>Question Types</h3>
             <ul>
               <li><strong>Table Analysis:</strong> Analyze data tables and answer questions</li>
@@ -148,10 +230,8 @@ const DataPage = ({ onComplete }) => {
               <li><strong>Two-Part Analysis:</strong> Answer two related questions about data</li>
               <li><strong>Data Sufficiency:</strong> Determine if given data is sufficient to answer questions</li>
             </ul>
-
             <h3>Navigation</h3>
             <p>Use the Next button to move to the next question.</p>
-            {/* <p>You can change your answers at any time before submitting.</p> */}
             <p>The calculator is provided here, you can use it.</p>
             <h3>Timer</h3>
             <p>The 16-minute timer will start when you begin the test.</p>
@@ -164,49 +244,53 @@ const DataPage = ({ onComplete }) => {
     );
   }
 
-  // Main test page
   return (
     <div className="data-insights-container">
       <div className='timer-container'>
         <div className="timer-bar">
           <h3>Question {currentQuestionIndex + 1} of {totalQuestions}</h3>
           <div className="timer-info">
-            <button
-              className="calculator-btn"
-              onClick={handleCalculatorClick}
-            >
+            <button className="calculator-btn" onClick={handleCalculatorClick}>
               Calculator
             </button>
             <span className="time-left">
               Time Left: {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}
             </span>
-            
           </div>
         </div>
-
 
         {showCalculator && (
           <div className="calculator-overlay" onClick={handleOverlayClick}>
             <Calculator onClose={() => setShowCalculator(false)} />
           </div>
         )}
-
       </div>
+
       <div className="question-container">
         {renderQuestionComponent()}
       </div>
 
       <div className="navigation-footer">
         {currentQuestionIndex < totalQuestions - 1 ? (
-          <button className="next-button" onClick={handleNext}>
-            Next
-          </button>
+          <div className="next-button-wrapper" onClick={handleNext}>
+            <button
+              className={`next-button ${!isCurrentAnswered ? 'disabled' : ''}`}
+            >
+              Next
+            </button>
+          </div>
         ) : (
           <button className="submit-button" onClick={handleSectionComplete}>
             Submit
           </button>
         )}
       </div>
+
+      {showToast && (
+        <div className="toast-message">
+          Please select an option before proceeding.
+        </div>
+      )}
     </div>
   );
 };

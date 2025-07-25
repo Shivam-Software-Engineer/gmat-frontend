@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
   }
+  .chart-title{
+    margin-bottom: 15px !important;
+    /* margin-left: 18px !important; */
+  }
   
   .chart-stats-wrapper {
     display: flex;
@@ -20,7 +24,7 @@
 .stats-details {
   flex: 1;
   padding-right: 0px;
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
   border-radius: 8px;
   align-self: stretch;
   display: flex;
@@ -36,14 +40,6 @@
   }
 }
 
-/* Keep all your existing CSS below this point */
-.chart-container {
-  margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 
 /* ... rest of your existing CSS ... */
 
@@ -53,7 +49,13 @@
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+gap: 0px;
+  display: flex ;               /* ✅ make it a flexbox */
+  
+  justify-content: flex-start ; /* ✅ align all content to top */
+  height: auto;               /* ✅ let it grow based on content */
 }
+
 
 .chart-container h3 {
   text-align: center;

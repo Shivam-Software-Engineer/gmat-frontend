@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, use } from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import { useNavigate } from 'react-router-dom';
 import './ResultPage.css';
@@ -7,22 +7,48 @@ import quantQuestions from '../../data/quantQuestions';
 import QuantResults from './QuantResults';
 import VerbalResults from './VerbalResults/VerbalResults';
 import DataResults from './DataResults';
+// import axios from 'axios';
 import Header from '../header';
+import { Result } from '../../Context/context';
+import { useSelector } from 'react-redux';
+
 
 const ResultPage = () => {
   const navigate = useNavigate();
+
+  
+const user = useSelector((state) => {
+  return state.Login.userDetail
+});  // Redux se user data
+
+
+useEffect(() => {
+  if (user==null) {
+    navigate('/login'); // redirect to login if not logged in
+  }
+}, [user]);
+
+
+  let {verbalResult}=useContext(Result)
+
+  
   const [verbalResponses, setVerbalResponses] = useState([]);
   const [quantResponses, setQuantResponses] = useState([]);
   const [activeSection, setActiveSection] = useState('verbal');
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
+   
+console.log(verbalResult)
   useEffect(() => {
     // Load responses from localStorage
+   
     const verbalRes = JSON.parse(localStorage.getItem('verbalAnswers')) || Array(verbalQuestions.length).fill(null);
     const quantRes = JSON.parse(localStorage.getItem('quantAnswers')) || Array(quantQuestions.length).fill(null);
     setVerbalResponses(verbalRes);
     setQuantResponses(quantRes);
   }, []);
+
+  
 
 const getQuestionStatus = (responseIndex, correctAnswerIndex) => {
   return responseIndex === correctAnswerIndex ? 'correct' : 'incorrect';

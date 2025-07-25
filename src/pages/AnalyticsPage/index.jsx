@@ -19,6 +19,7 @@ import downloadAnalytics from "../../components/Analytics/downloadAnalytics";
 import renderPieChart from "../../components/Analytics/renderPieChart";
 import RenderOverallPieChart from "../../components/Analytics/renderOverallPieChart";
 import getFeedbackMessage from "../../components/Analytics/getFeedbackMessage";
+import { useSelector } from "react-redux";
 
 const AnalyticsPage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,18 @@ const AnalyticsPage = () => {
   const [quantResponses, setQuantResponses] = useState([]);
   const [dataResponses, setDataResponses] = useState({});
   const [analyticsData, setAnalyticsData] = useState([]);
+
+  
+const user = useSelector((state) => {
+  return state.Login.userDetail
+});  // Redux se user data
+
+
+useEffect(() => {
+  if (user==null) {
+    navigate('/login'); // redirect to login if not logged in
+  }
+}, [user]);
 
   useEffect(() => {
     const verbalRes =
@@ -57,9 +70,12 @@ const AnalyticsPage = () => {
 
   return (
     <>
-      <Header />
+      
       <div className="analytics-container">
         <div className="analytics-page" id="analytics-report">
+        
+           <Header />
+        
           <div className="summary-comparison">
             <div className="overall-summary">
               {analyticsData.length > 0 && (
@@ -104,7 +120,10 @@ const AnalyticsPage = () => {
           <div className="analytics-footer">
             <h2>Contact Us for More !</h2>
             <div className="footer-contact-row">
-              <p className="footer-phone">📞 +91 1234567890</p>
+           <p className="footer-phone">
+              📞 <a href="tel:+917715031666">+91 77150 31666</a>
+           </p>
+
               <span className="footer-separator">|</span>
               <p className="footer-link">
                 🌐{" "}
@@ -116,8 +135,8 @@ const AnalyticsPage = () => {
                   www.maxiwiselearning.online
                 </a>
               </p>
-            </div>
-            <div className="button-group">
+            </div> 
+            <div className="button-group hide-for-print">
               <button
                 className="back-button"
                 onClick={() => navigate("/final")}

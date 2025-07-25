@@ -1,20 +1,47 @@
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import './quant.css';
-import questions from '../../data/quantQuestions';
+// import questions from '../../data/quantQuestions';
 import StartTimer from '../../components/StartTimer';
+import { Result } from '../../Context/context';
 
 
 const QuantPage = ({ onComplete }) => {
+  let { setQuantresult}=useContext(Result)
   const [current, setCurrent] = useState(0);
-  const [userAnswers, setUserAnswers] = useState(
-    JSON.parse(localStorage.getItem('quantAnswers')) || Array(questions.length).fill(null)
-  );
+   const [userAnswers, setUserAnswers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   const [testStarted, setTestStarted] = useState(false);
-  const question = questions[current];
+ const [showDisabledMessage, setShowDisabledMessage] = useState(false);
+
+const isCurrentAnswered = userAnswers[current] !== undefined && userAnswers[current] !== null;
+
+  let [quantques,setQuantques]=useState([])  //Storing questions from api
+
+  const Myapi=import.meta.env.VITE_BASE_API;  //This is base api
+  // console.log(Myapi)  http://localhost:8000
+
+
+  let getQuantquestions=()=>{
+    axios.get(Myapi+'/website/questions/quant')
+     .then((res) => res.data)
+     .then((finalres)=>{
+      setQuantques(finalres.data)
+    
+     })
+      
+  }
+
+  useEffect(()=>{
+    getQuantquestions()
+     
+  },[])
+
+   const question = quantques[current];
+  
 
   useEffect(() => {
     if (testStarted) {
@@ -36,6 +63,12 @@ const QuantPage = ({ onComplete }) => {
     return () => clearInterval(timer);
   }, [timeLeft, isSubmitting, testStarted]);
 
+  const handleDisabledClick = () => {
+  setShowDisabledMessage(true);
+  setTimeout(() => setShowDisabledMessage(false), 2000);
+};
+
+
   const formatTime = () => {
     const min = Math.floor(timeLeft / 60);
     const sec = timeLeft % 60;
@@ -49,7 +82,7 @@ const QuantPage = ({ onComplete }) => {
   };
 
   const handleNext = () => {
-    if (current < questions.length - 1) {
+    if (current < quantques.length - 1) {
       setCurrent(prev => prev + 1);
     }
   };
@@ -65,10 +98,49 @@ const QuantPage = ({ onComplete }) => {
     onComplete();
   };
 
-  const handleFinalSubmit = () => {
-    setIsSubmitting(true);
+const handleFinalSubmit = async () => {
+  setIsSubmitting(true);
+
+  const gUser = JSON.parse(localStorage.getItem("gUser"));
+  const email = gUser?.email;
+
+  if (!email) {
+ 
+    setIsSubmitting(false);
+    return;
+  }
+
+  // Map question + answer + correct together
+  const formattedResponses = quantques.map((q, index) => ({
+    id: q.id,
+    selected: userAnswers[index] !== undefined ? userAnswers[index] : null,
+    correct: q.correct,
+  }));
+
+  try {
+    await axios.post(`${Myapi}/website/answers/quant`, {
+      email: email,
+      responses: formattedResponses
+    }
+    
+  
+  )
+  .then((res) => {
+  setQuantresult(res.data.data); // ← yahi data render karo
+});
+   
+
+    // Save full response with correct answer to localStorage
+    localStorage.setItem("quantFinalAnswers", JSON.stringify(formattedResponses));
+
     onComplete();
-  };
+  } catch (error) {
+    console.error("Error submitting answers:", error);
+    alert("You already attempted this exam.");
+   
+    setIsSubmitting(false);
+  }
+};
 
   const startTest = () => {
     setShowInstructions(false);
@@ -77,12 +149,13 @@ const QuantPage = ({ onComplete }) => {
 
   if (showInstructions) {
     return (
+    
       <div className="quant-container">
         <div className="instructions-box">
           <h2>Quantitative Section Instructions<span><StartTimer onTimeUp={startTest} testStarted={testStarted} /></span></h2>
           <div className="instructions-content">
             <h3>Section Overview</h3>
-            <p>This section contains {questions.length} questions to be completed in 15 minutes.</p>
+            <p>This section contains {quantques.length} questions to be completed in 15 minutes.</p>
 
             <h3>Question Types</h3>
             <ul>
@@ -116,7 +189,7 @@ const QuantPage = ({ onComplete }) => {
       }}>
       <div className="quant-container">
         <div className="timer">
-          <h3>Question {current + 1} of 7</h3>
+          <h3>Question {current + 1} of {quantques.length}</h3>
           <span>Time Left: {formatTime()}</span>
         </div>
 
@@ -157,14 +230,17 @@ const QuantPage = ({ onComplete }) => {
           </div>
         </div>
         <div className="navigation-footer">
-          {current < questions.length - 1 ? (
-            <button
-              onClick={handleNext}
-              disabled={userAnswers[current] === null || isSubmitting}
-              className="nav-btn next-btn"
-            >
-              Next
-            </button>
+          {current < quantques.length - 1 ? (
+           <div onClick={!isCurrentAnswered ? handleDisabledClick : undefined}>
+  <button
+    onClick={handleNext}
+    disabled={!isCurrentAnswered || isSubmitting}
+    className={`nav-btn next-btn ${!isCurrentAnswered ? 'disabled-btn' : ''}`}
+  >
+    Next
+  </button>
+</div>
+
           ) : (
             <button
               disabled={userAnswers[current] === null || isSubmitting}
@@ -175,6 +251,13 @@ const QuantPage = ({ onComplete }) => {
             </button>
           )}
         </div>
+       {showDisabledMessage && (
+  <div className="toast-message">
+    Please select an option before proceeding.
+  </div>
+)}
+
+
       </div>
     </MathJaxContext>
   );

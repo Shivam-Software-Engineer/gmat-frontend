@@ -4,6 +4,7 @@ import VerbalPage from '../../pages/VerbalPage';
 import QuantPage from '../../pages/QuantPage';
 import DataPage from '../../pages/DataPage';
 import './style.css';
+import { useSelector } from 'react-redux';
 
 
 const SectionNavigator = () => {
@@ -12,6 +13,20 @@ const SectionNavigator = () => {
   const [sectionOrder, setSectionOrder] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sectionCompleted, setSectionCompleted] = useState(false);
+
+
+
+  
+const user = useSelector((state) => {
+  return state.Login.userDetail
+});  // Redux se user data
+
+
+useEffect(() => {
+  if (user==null) {
+    navigate('/login'); // redirect to login if not logged in
+  }
+}, [user]);
 
   useEffect(() => {
     const storedOrder = JSON.parse(localStorage.getItem('selectedOrder'));
