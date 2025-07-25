@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./instructions.css";
+// import "./instructions.css";
+import './instructions.css';
 import Header from "../../components/header";
 import { useSelector } from "react-redux";
 
