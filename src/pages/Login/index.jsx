@@ -87,7 +87,7 @@ const LoginPage = () => {
       `,
       allowOutsideClick: false,
       showConfirmButton: false,
-      width: 320,
+      
     });
 
     // 📤 Send data to Google Sheet
